@@ -1,85 +1,150 @@
-# 🌐 Project AURA: Autonomous Multi-Agent Cyber Intelligence
+# 🛡️ Project AURA — Autonomous Multi-Agent Cyber Intelligence
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Multi-Agent](https://img.shields.io/badge/Architecture-Multi_Agent_System-8A2BE2?style=for-the-badge&logo=openai&logoColor=white)
-![CrewAI](https://img.shields.io/badge/Framework-CrewAI%20%7C%20LangChain-FF9900?style=for-the-badge)
-![Gemini](https://img.shields.io/badge/LLM-Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)
+<div align="center">
 
-> **"Transitioning from AI as a reactive tool to AI as a collaborative, autonomous workforce."**
-> Project AURA orchestrates specialized AI agents to autonomously analyze threat vectors and synthesize actionable C-level Security Operations Center (SOC) reports in seconds.
+```
+     █████╗ ██╗   ██╗██████╗  █████╗
+    ██╔══██╗██║   ██║██╔══██╗██╔══██╗
+    ███████║██║   ██║██████╔╝███████║
+    ██╔══██║██║   ██║██╔══██╗██╔══██║
+    ██║  ██║╚██████╔╝██║  ██║██║  ██║
+    ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+```
 
-## 📑 5-Point Project Framework
+**Autonomous Multi-Agent Cyber Intelligence System**
 
-### 1. Background
-In modern enterprise environments, Tier-1 SOC analysts suffer from severe alert fatigue. When a threat indicator (like a suspicious IP or malware hash) is flagged, analysts must manually gather threat intelligence, correlate vulnerabilities, and draft incident reports. This sequential, manual process creates dangerous operational bottlenecks.
+*Powered by CrewAI + Google Gemini 1.5 Flash*
 
-### 2. Objective
-To architect **AURA (Autonomous Universal Research Agent)**, a Multi-Agent system that simulates a micro-SOC environment. The goal is to deploy collaborative, role-playing AI agents that can autonomously hand off tasks—from raw threat hunting to executive reporting—without human intervention.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://python.org)
+[![CrewAI](https://img.shields.io/badge/CrewAI-Multi--Agent-blueviolet)](https://crewai.com)
+[![Gemini](https://img.shields.io/badge/Gemini-1.5%20Flash-orange?logo=google)](https://ai.google.dev)
 
-### 3. Tools & Technologies
-* **Orchestration Framework:** CrewAI & LangChain
-* **LLM Engine:** Google Gemini Generative AI (`gemini-1.5-flash`) via `langchain-google-genai`
-* **Credential Management:** `python-dotenv` for strict environment variable isolation
-* **Architecture:** Sequential Task Delegation (Multi-Agent Workflow)
-
-### 4. Insights & Engineering Challenges
-The critical leap in this project was moving from basic *Prompt Engineering* to **Agent Orchestration**.
-* **The Hallucination Problem:** A single LLM tasked with both analyzing raw technical data and writing a readable report often hallucinates or loses technical fidelity. 
-* **The Multi-Agent Solution:** I engineered a decoupled, two-node architecture. 
-  1. **Node A (The Threat Researcher):** Strictly prompted to operate as a cynical, data-driven security analyst. Its only job is to extract attack vectors, CVEs, and technical indicators.
-  2. **Node B (The SOC Reporter):** Programmed as a Senior Security Consultant. It takes Node A's raw technical output as its *only* context and translates it into a polished, risk-assessed executive summary. 
-  By isolating data-gathering from data-presentation, the system ensures high accuracy and zero hallucination.
-
-### 5. Measurable Impact
-* **Workflow Automation:** Successfully simulates a multi-tiered SOC analysis pipeline, reducing report generation time from an average of 25 minutes to under **15 seconds**.
-* **Scalable Architecture:** Establishes a scalable blueprint. Additional agents (e.g., a "Malware Reverse Engineer" or "Compliance Auditor") can be seamlessly injected into the crew to handle expanding enterprise requirements.
+</div>
 
 ---
 
-## ⚙️ Core Architecture: CrewAI Orchestration
+## 📖 Overview
 
-The system leverages `CrewAI` to define strict personas, goals, and sequential tasks.
+**Project AURA** is a production-ready multi-agent threat intelligence system that leverages Google's Gemini 1.5 Flash model through a CrewAI sequential pipeline. It transforms raw cyber threat scenarios into actionable, executive-ready intelligence reports.
 
-```python
-# Snippet: AURA's Multi-Agent Orchestration Logic
-from crewai import Agent, Task, Crew, Process
+### The Pipeline
 
-# 1. Define the Specialized Agents
-threat_researcher = Agent(
-    role='Senior Threat Intelligence Analyst',
-    goal='Uncover attack vectors, CVEs, and technical details of the provided threat.',
-    backstory='You are a cynical, detail-oriented cyber security researcher who only cares about raw technical facts.',
-    verbose=True,
-    allow_delegation=False,
-    llm=gemini_llm
-)
+```
+┌─────────────────────┐        ┌─────────────────────┐
+│   Threat_Researcher │  ───►  │    SOC_Reporter      │
+│                     │        │                       │
+│  • Attack Vectors   │        │  • Threat Landscape   │
+│  • IOCs & TTPs      │ output │  • Impact Assessment  │
+│  • CVE Analysis     │ ────►  │  • Strategic Recs     │
+│  • MITRE ATT&CK     │        │  • Business Risk      │
+│  • Forensic Data    │        │  • C-Level Summary    │
+└─────────────────────┘        └─────────────────────┘
+   Senior Threat Intel             Lead SOC Consultant
+      Analyst                    (Executive Reporting)
+```
 
-soc_reporter = Agent(
-    role='Lead SOC Consultant',
-    goal='Synthesize raw threat data into a clear, actionable C-level executive summary.',
-    backstory='You bridge the gap between technical complexity and business risk. You write with authority and clarity.',
-    verbose=True,
-    allow_delegation=False,
-    llm=gemini_llm
-)
+## 🚀 Quick Start
 
-# 2. Define the Sequential Tasks
-research_task = Task(
-    description='Analyze the following threat scenario: {threat_input}. Extract all technical indicators.',
-    expected_output='A detailed technical breakdown of the threat.',
-    agent=threat_researcher
-)
+### 1. Clone & Navigate
 
-reporting_task = Task(
-    description='Take the researcher\'s output and draft a 3-paragraph executive incident report.',
-    expected_output='A professional, C-level SOC report with Risk Level and Mitigation steps.',
-    agent=soc_reporter
-)
+```bash
+cd "Project AURA Autonomous Multi-Agent Cyber Intelligence"
+```
 
-# 3. Assemble the Crew and Execute
-aura_crew = Crew(
-    agents=[threat_researcher, soc_reporter],
-    tasks=[research_task, reporting_task],
-    process=Process.sequential # Node A must finish before Node B starts
-)
-Architected by Nicky Hadfat Sugianto | AI Agent Developer & Cyber Security Enthusiast.
+### 2. Create Virtual Environment (Recommended)
+
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure API Key
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and add your Google API key:
+
+```
+GOOGLE_API_KEY=your-actual-api-key-here
+```
+
+> 🔑 Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+### 5. Run AURA
+
+```bash
+python aura_multiagent.py
+```
+
+## 🏗️ Architecture
+
+### Agents
+
+| Agent | Role | Temperature | Purpose |
+|-------|------|:-----------:|---------|
+| **Threat_Researcher** | Senior Threat Intelligence Analyst | 0.4 | Precise technical extraction of IOCs, TTPs, CVEs |
+| **SOC_Reporter** | Lead SOC Consultant | 0.7 | Natural-language executive summary generation |
+
+### Key Design Decisions
+
+- **Gemini 1.5 Flash**: Chosen for its low quota consumption and fast inference, ideal for multi-agent pipelines where two sequential LLM calls are required per run.
+- **Sequential Process**: The Reporter *depends* on the Researcher's output — parallel execution would break the intelligence pipeline.
+- **No Delegation**: Both agents are set to `allow_delegation=False` to prevent circular delegation loops and ensure deterministic execution order.
+- **Dual Temperature**: Lower temperature for factual extraction (0.4), higher for creative executive prose (0.7).
+
+## 📝 Example Usage
+
+```
+⟩ Threat Scenario: A sophisticated phishing campaign targeting our finance
+  department using lookalike domains and deploying Cobalt Strike beacons
+  after initial access via macro-enabled Excel attachments.
+```
+
+The system will produce:
+
+1. **Technical Intelligence Report** — Full breakdown with MITRE ATT&CK mapping
+2. **Executive Summary** — 3-paragraph C-level briefing with impact assessment and strategic recommendations
+
+## 📁 Project Structure
+
+```
+Project AURA/
+├── aura_multiagent.py    # Main multi-agent script
+├── .env                  # Your API key (git-ignored)
+├── .env.example          # API key template
+├── .gitignore            # Git ignore rules
+├── requirements.txt      # Python dependencies
+└── README.md             # This file
+```
+
+## ⚠️ Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `GOOGLE_API_KEY is not set` | Create `.env` file with your API key |
+| `crewai is not installed` | Run `pip install -r requirements.txt` |
+| `429 / Quota exceeded` | Wait a few minutes; Gemini 1.5 Flash has generous free-tier limits |
+| `API key invalid` | Verify your key at [Google AI Studio](https://aistudio.google.com) |
+
+## 👤 Credits
+
+**Architect & Developer:** Nicky Hadfat Sugianto ([@JustNickyH](https://github.com/JustNickyH))
+
+---
+
+<div align="center">
+
+*Built with 🔒 by JustNickyH — Defending the digital frontier, one agent at a time.*
+
+</div>
